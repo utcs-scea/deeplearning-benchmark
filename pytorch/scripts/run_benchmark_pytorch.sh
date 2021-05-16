@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 SYSTEM=${1:-"2080Ti"}
 TASK_NAME=${2:-"all"}
@@ -163,7 +163,6 @@ benchmark_pytorch() {
     
     RESULTS_PATH=/results/${SYSTEM}/${task}/
     TASK_PARAMS=${task}_PARAMS[@]
-    MONITOR_INTERVAL=2
 
     local command_path=$(sed 's/\.*args.*//' <<<${!TASK_PARAMS})
 
@@ -175,23 +174,8 @@ benchmark_pytorch() {
     for i in $(seq 1 $NUM_EXP); do
 	name=${RESULTS_PATH}$(date +%d-%m-%Y_%H-%M-%S)
 	file_result=$name".txt"
-	file_monitor=$name"_monitor.csv"
         
-	flag_monitor=true
-
-        ${TASKS[${task}]} $task $file_result &
-
-        while $flag_monitor;
-	do
-	    last_line="$(tail -1 $file_result)"
-	    if [ "$last_line" == "DONE!" ]; then
-	        flag_monitor=false
-	    else
-	        status="$(nvidia-smi --query-gpu=temperature.gpu,utilization.gpu,memory.used --format=csv | tail -1)"
-		echo "${status}" >> $file_monitor
-            fi
-	    sleep $MONITOR_INTERVAL
-	done	
+	${TASKS[${task}]} $task $file_result
 
         sleep 5
     done

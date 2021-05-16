@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 SYSTEM=${1:-"2080Ti"}
 TASK_NAME=${2:-"all"}
@@ -12,9 +12,8 @@ cp /scripts/patch/multiproc.py examples/tacotron2
 
 
 if [[ "${TASK_NAME}" == *"ssd"* ]] || [ $TASK_NAME = "all" ] || [[ "${TASK_NAME}" == *"maskrcnn"* ]]; then
-	pushd .
-	cd examples/ssd
-	pip install .
+	pushd examples/ssd
+	pip install -r requirements.txt
 	popd
 fi
 

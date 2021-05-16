@@ -36,6 +36,7 @@ PyTorch_resnet50_FP32_PARAMS=(
              --print-freq             "1"
              --training-only
 	     --data-backend pytorch
+             --data-backend syntetic
            )
 
 PyTorch_resnet50_FP16_PARAMS=(
@@ -52,6 +53,7 @@ PyTorch_resnet50_FP16_PARAMS=(
              --print-freq             "1"
              --training-only  
 	     --data-backend pytorch
+             --data-backend syntetic
            )
 
 PyTorch_resnet50_AMP_PARAMS=(
@@ -68,6 +70,7 @@ PyTorch_resnet50_AMP_PARAMS=(
              --print-freq             "1"
              --training-only   
 	     --data-backend pytorch
+             --data-backend syntetic
            )
 
 PyTorch_maskrcnn_FP32_PARAMS=(
