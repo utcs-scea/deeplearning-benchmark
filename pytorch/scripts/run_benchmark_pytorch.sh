@@ -163,6 +163,7 @@ benchmark_pytorch() {
     
     RESULTS_PATH=/results/${SYSTEM}/${task}/
     TASK_PARAMS=${task}_PARAMS[@]
+    MONITOR_INTERVAL=2
 
     local command_path=$(sed 's/\.*args.*//' <<<${!TASK_PARAMS})
 
@@ -174,8 +175,27 @@ benchmark_pytorch() {
     for i in $(seq 1 $NUM_EXP); do
 	name=${RESULTS_PATH}$(date +%d-%m-%Y_%H-%M-%S)
 	file_result=$name".txt"
-        
-	${TASKS[${task}]} $task $file_result
+    file_monitor=$name"_monitor.csv"
+
+    flag_monitor=true
+
+	${TASKS[${task}]} $task $file_result &
+
+    while $flag_monitor;
+    do
+        last_line="$(tail -1 $file_result)"
+        if [ "$last_line" == "DONE!" ]; then
+            flag_monitor=false
+        else
+            # status="$(nvidia-smi --query-gpu=temperature.gpu,utilization.gpu,memory.used --format=csv -i 0 | tail -1)"
+            # The preceeding status command doesn't successfully collect utilization or memory usage inside a container
+            # due to missing NVIDIA support.
+            # instead we hack up nvidia-smi to get something close
+            memory_utilization="$(nvidia-smi | grep "MIG devices" -A9|grep '[0-9]*MiB' -o -m 1|head -n1)"
+            echo "${memory_utilization}" >> $file_monitor
+        fi
+        sleep $MONITOR_INTERVAL
+    done
 
         sleep 5
     done

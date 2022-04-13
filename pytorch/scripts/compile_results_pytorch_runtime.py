@@ -84,34 +84,33 @@ list_system_multiple = {
 }
 
 list_test_fp32 = [
-            # nvcr.io/nvidia/pytorch:20.01-py3
-            {
-                'PyTorch_SSD_FP32': ('ssd', "^.*Training performance =.*$", -2),
-                'PyTorch_resnet50_FP32': ('resnet50', "^.*Summary: train.loss.*$", -2),
-                'PyTorch_maskrcnn_FP32': ('maskrcnn', "^.*Training perf is:.*$", -2),
-                'PyTorch_gnmt_FP32': ('gnmt', "^.*Training:.*$", -4),
-                'PyTorch_ncf_FP32': ('ncf', "^.*best_train_throughput:.*$", -1),
-                'PyTorch_transformerxlbase_FP32': ('transformerxlbase', "^.*Training throughput:.*$", -2),
-                'PyTorch_transformerxllarge_FP32': ('transformerxllarge', "^.*Training throughput:.*$", -2),
-                'PyTorch_tacotron2_FP32': ('tacotron2', "^.*train_epoch_avg_items/sec:.*$", -1),
-                'PyTorch_waveglow_FP32': ('waveglow', "^.*train_epoch_avg_items/sec:.*$", -1),
-                'PyTorch_bert_large_squad_FP32': ('bert_large_squad', "^.*training throughput:.*$", -1),
-                'PyTorch_bert_base_squad_FP32': ('bert_base_squad', "^.*training throughput:.*$", -1),
-             },
-            # nvcr.io/nvidia/pytorch:20.10-py3
-            {
-                'PyTorch_SSD_FP32': ('ssd', "^.*Training performance =.*$", -2),
-                'PyTorch_resnet50_FP32': ('resnet50', "^.*Summary: train.loss.*$", -2),
-                'PyTorch_maskrcnn_FP32': ('maskrcnn', "^.*Training perf is:.*$", -2),
-                'PyTorch_gnmt_FP32': ('gnmt', "^.*Training:.*$", -4),
-                'PyTorch_ncf_FP32': ('ncf', "^.*best_train_throughput:.*$", -1),
-                'PyTorch_transformerxlbase_FP32': ('transformerxlbase', "^.*Training throughput:.*$", -2),
-                'PyTorch_transformerxllarge_FP32': ('transformerxllarge', "^.*Training throughput:.*$", -2),
-                'PyTorch_tacotron2_FP32': ('tacotron2', "^.*train_items_per_sec :.*$", -2),
-                'PyTorch_waveglow_FP32': ('waveglow', "^.*train_items_per_sec :.*$", -2),
-                'PyTorch_bert_large_squad_FP32': ('bert_large_squad', "^.*training_sequences_per_second :.*$", -6),
-                'PyTorch_bert_base_squad_FP32': ('bert_base_squad', "^.*training_sequences_per_second :.*$", -6),
-             }             
+         {
+            'PyTorch_SSD_FP32': ('ssd', "^.*total time : .*$", -2),
+            'PyTorch_resnet50_FP32': ('resnet50', "total time not in output", -2),
+            'PyTorch_maskrcnn_FP32': ('maskrcnn', "^.*Total training time: 0:([0-9]+:[0-9]+\.[0-9]+).*$", 7),
+            'PyTorch_gnmt_FP32': ('gnmt', "^.*([0-9]+\.[0-9]+)|$", -1),
+            'PyTorch_ncf_FP32': ('ncf', "^.*time_to_best_model:.*$", -1),
+            'PyTorch_transformerxlbase_FP32': ('transformerxlbase', "^.*Training time:.*$", -2),
+            'PyTorch_transformerxllarge_FP32': ('transformerxllarge', "^.*Training time:.*$", -2),
+            'PyTorch_tacotron2_FP32': ('tacotron2', "^.*run_time : .*$", -2),
+            'PyTorch_waveglow_FP32': ('waveglow', "^.*run_time : .*$", -2),
+            'PyTorch_bert_large_squad_FP32': ('bert_large_squad', "^.*training time:.*$", -1),
+            'PyTorch_bert_base_squad_FP32': ('bert_base_squad', "^.*training time:.*$", -1),
+        },
+        # nvcr.io/nvidia/pytorch:21.04-py3
+        {
+            'PyTorch_SSD_FP32': ('ssd', "^.*total time : .*$", -2),
+            'PyTorch_resnet50_FP32': ('resnet50', "total time not in output", -2),
+            'PyTorch_maskrcnn_FP32': ('maskrcnn', "^.*Total training time: 0:([0-9]+:[0-9]+\.[0-9]+).*$", 7),
+            'PyTorch_gnmt_FP32': ('gnmt', "^.*([0-9]+\.[0-9]+)|$", -1),
+            'PyTorch_ncf_FP32': ('ncf', "^.*time_to_best_model:.*$", -1),
+            'PyTorch_transformerxlbase_FP32': ('transformerxlbase', "^.*Training time:.*$", -2),
+            'PyTorch_transformerxllarge_FP32': ('transformerxllarge', "^.*Training time:.*$", -2),
+            'PyTorch_tacotron2_FP32': ('tacotron2', "^.*run_time : .*$", -2),
+            'PyTorch_waveglow_FP32': ('waveglow', "^.*run_time : .*$", -2),
+            'PyTorch_bert_large_squad_FP32': ('bert_large_squad', "^.*training time:.*$", -1),
+            'PyTorch_bert_base_squad_FP32': ('bert_base_squad', "^.*training time:.*$", -1),
+        }             
 ]
 
 list_test_fp16 = [
@@ -119,7 +118,7 @@ list_test_fp16 = [
         {
             'PyTorch_SSD_AMP': ('ssd', "^.*Training performance =.*$", -2),
             'PyTorch_resnet50_FP16': ('resnet50', "^.*Summary: train.loss.*$", -2),
-            'PyTorch_maskrcnn_FP16': ('maskrcnn', "^.*Training perf is:.*$", -2),
+            'PyTorch_maskrcnn_FP16': ('maskrcnn', "^.*Training perf is:.*$", 7),
             'PyTorch_gnmt_FP16': ('gnmt', "^.*Training:.*$", -4),
             'PyTorch_ncf_FP16': ('ncf', "^.*best_train_throughput:.*$", -1),
             'PyTorch_transformerxlbase_FP16': ('transformerxlbase', "^.*Training throughput:.*$", -2),
@@ -133,7 +132,7 @@ list_test_fp16 = [
         {
             'PyTorch_SSD_AMP': ('ssd', "^.*Training performance =.*$", -2),
             'PyTorch_resnet50_FP16': ('resnet50', "^.*Summary: train.loss.*$", -2),
-            'PyTorch_maskrcnn_FP16': ('maskrcnn', "^.*Training perf is:.*$", -2),
+            'PyTorch_maskrcnn_FP16': ('maskrcnn', "^.*Training perf is:.*$", 7),
             'PyTorch_gnmt_FP16': ('gnmt', "^.*Training:.*$", -4),
             'PyTorch_ncf_FP16': ('ncf', "^.*best_train_throughput:.*$", -1),
             'PyTorch_transformerxlbase_FP16': ('transformerxlbase', "^.*Training throughput:.*$", -2),
@@ -152,29 +151,22 @@ def gather_last(list_test, list_system, name, system, config_name, df, version, 
     path = path_result + '/' + system + '/' + name
     count = 0.000001
     total_throughput = 0.0
-
     if os.path.exists(path):
         for filename in os.listdir(path):
             if filename.endswith(".txt"):
-                flag = False
-                throughput = 0
+                runtime = 0 
                 # Sift through all lines and only keep the last occurrence
                 for i, line in enumerate(open(os.path.join(path, filename))):
-
                     for match in re.finditer(pattern, line):
                         try:
-                            throughput = float(match.group().split(' ')[pos])
+                            rt_string = match.group().split(' ')[pos]
+                            # parse hours:minutes:seconds into seconds, if that's how the data is formatted
+                            runtime = sum(x * float(t) for x, t in zip(reversed([3600, 60, 1]), reversed(rt_string.split(":"))))
                         except:
                             pass
-
-                if throughput > 0:
-                    count += 1
-                    total_throughput += throughput
-                    flag = True
-
-                if not flag:
+                if runtime == 0:
                     print(system + "/" + name + " " + filename + ": something wrong")
-        df.at[config_name, column_name] = int(round(total_throughput / count, 2))
+        df.at[config_name, column_name] = runtime
     else:
         raise Exception("Couldn't find output files at path: " + path)
 
@@ -233,7 +225,7 @@ def main():
 
     df.index.name = 'name_gpu'
 
-    df.to_csv('pytorch-train-throughput-' + args.precision + '.csv')
+    df.to_csv('pytorch-train-runtime-' + args.precision + '.csv')
 
 if __name__ == "__main__":
     main()
